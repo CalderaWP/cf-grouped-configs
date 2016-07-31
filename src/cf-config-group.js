@@ -1,15 +1,14 @@
 function CF_Processor_Group_Field( $, slug ) {
 
-	//alias this as self for use inside of functions
+	//Alias this as self for use inside of functions
 	var self = this;
 
-	//holds processor ID
+	//Holds processor ID
 	this.pId = '';
 
-	//used to track if remove code button has been hidden
+	//Used to track if remove code button has been hidden
 	this.removeHidden = false;
 
-	this.name = '';
 
 	// trigger group remove
 	$( document ).on( 'click', '.' + slug + '-group-remove', function () {
@@ -36,18 +35,19 @@ function CF_Processor_Group_Field( $, slug ) {
 
 	});
 
-	//maybe unhide remove group button when adding new button
+	//Maybe unhide remove group button when adding new button
 	$( document ).on( 'click', '.' + slug + '-group-add', function () {
 		if(  self.count_groups != 1 && true === self.removeHidden ){
 			$( '.' + slug + '-group-remove' ).show().attr( 'aria-hidden', false ).css( 'visibility', 'visible' );
 		}
 	});
 
+	//Get current group count
 	this.count_groups = function(){
 		return $( '#' + self.pId + '_groups .' + slug + '-group' ).length;
 	};
 
-	// add trigger to build groups
+	// Add trigger to build groups
 	$(document).on('click', '.processor_type_' + slug, function () {
 		var clicked = $(this),
 			pid = $('#' + clicked.find('input').val() + '_config_groups');
@@ -57,15 +57,12 @@ function CF_Processor_Group_Field( $, slug ) {
 		}
 	});
 
-	// build trigger
+	// Build trigger -- also runs when there is a new group added
 	this.group = function (obj) {
 		var id = 'cfd' + Math.round(Math.random() * 18746582734), // generate a random ID
 			name = obj.trigger.data('name'),
 			groups = obj.trigger.val();
 
-		if( '' === self.name ){
-			 self.name = name;
-		}
 
 		if( undefined == name ){
 			name = 'config[processors][' + self.pId + '][config]';
@@ -101,7 +98,7 @@ function CF_Processor_Group_Field( $, slug ) {
 		return config;
 	};
 
-	// get rid of the first remove code button to keep at least a single group
+	// Get rid of the first remove code button to keep at least a single group
 	this.cleanup = function (obj) {
 		var first_remover = obj.params.target.find( '.' + self.prefix ).first().find( '.' + self.prefix + '-group-remove');
 		if (first_remover.length) {
