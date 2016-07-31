@@ -1,0 +1,20 @@
+{
+  "name": "calderawp/cf-grouped-configss",
+  "description": "Library for adding grouped configs to Caldera Forms processor UI",
+  "license": "GPL-2.0+",
+  "authors": [
+    {
+      "name": "Josh Pollock for CalderaWP LLC",
+      "homepage": "https://CalderaWP.com",
+      "role": "Lead Developer"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "calderawp\\cf\\groupconfig": "src"
+    }
+  }
+}
