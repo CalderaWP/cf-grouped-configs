@@ -74,6 +74,7 @@ class group_field {
 			esc_attr( $this->translation_strings[ 'remove_confirm' ] ),
 			esc_html( $this->translation_strings[ 'remove_text' ] )
 		);
+
 	}
 
 }

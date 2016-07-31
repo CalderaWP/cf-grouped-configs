@@ -72,7 +72,7 @@ class ui {
 	 */
 	public function filter_fields( $field_html, $type, $args, $id, $classes, $required ){
 		if( 'group' == $type ){
-			return $this->group_field();
+			return $this->group_field( $args[ 'group-slug'], $args[ 'translation-strings'] );
 		}
 
 		if( 'number' == $type ){
@@ -89,27 +89,27 @@ class ui {
 	/**
 	 * Print template for group
 	 *
-	 * @uses "caldera_forms_edit_end" action
+
 	 *
 	 * @return string
 	 */
-	protected function group_field(){
+	protected function group_field( $slug, $translation_strings ){
 
 		$out = sprintf( '<div id="{{_id}}_groups"><input class="ajax-trigger" name="{{_name}}[group]" data-name="{{_name}}" autocomplete="off" data-request="%s" data-template="#%s" data-target="#{{_id}}_groups" data-event="build_groups" type="hidden" id="{{_id}}_config_groups" value="{{#if group}}{{json group}}{{/if}}" data-callback="%s" data-processor-id="{{_id}}"></div>',
-			esc_attr( str_replace( '-', '_', $this->slug ) . '_group' ),
-			esc_attr( $this->slug . '-group-tmpl' ),
-			esc_attr( str_replace( '-', '_', $this->slug ) . '_cleanup' )
+			esc_attr( str_replace( '-', '_', $slug ) . '_group' ),
+			esc_attr( $slug . '-group-tmpl' ),
+			esc_attr( str_replace( '-', '_', $slug ) . '_cleanup' )
 		);
 
 
 		// Add new group button trigger
 		$out .= sprintf( '<button class="button ajax-trigger %s" title="%" data-name="{{_name}}" data-request="%s" data-template="#%s" data-target="#{{_id}}_groups" data-target-insert="append" type="button" data-callback="%s"><span class="dashicons dashicons-plus" style="margin: 0px 0px 0px -6px; padding: 5px 0px;"></span> %s</button>',
-			esc_attr( $this->slug . '-group-add' ),
-			esc_attr( $this->translation_strings[ 'add_title' ] ),
-			esc_attr( str_replace( '-', '_', $this->slug ) . '_group' ),
-			esc_attr( $this->slug . '-group-tmpl' ),
-			esc_attr( str_replace( '-', '_', $this->slug ) . '_cleanup' ),
-			esc_html__( $this->translation_strings[ 'add_text'] )
+			esc_attr( $slug . '-group-add' ),
+			esc_attr( $translation_strings[ 'add_title' ] ),
+			esc_attr( str_replace( '-', '_', $slug ) . '_group' ),
+			esc_attr( $slug . '-group-tmpl' ),
+			esc_attr( str_replace( '-', '_', $slug ) . '_cleanup' ),
+			esc_html__( $translation_strings[ 'add_text'] )
 		);
 
 		return $out;
@@ -179,20 +179,25 @@ class ui {
 	/**
 	 * Create UI group template
 	 *
+	 * @uses "caldera_forms_edit_end" action
+	 *
 	 * @since 0.1.0
 	 *
 	 * @return array
 	 */
 	public function group_template(){
+		if( ! did_action( $this->slug . __FUNCTION__ ) ) {
+			printf( '<script type="text/html" id="%s">', esc_attr( $this->slug . '-group-tmpl' ) );
+			echo '{{#each group}}';
+			$group = new group_field( $this->fields, $this->slug, $this->translation_strings );
+			printf( '<div class="%s">', esc_attr( $this->slug . '-group' ) );
+			echo $group->get_html();
+			echo '<hr class="clear"></div>';
+			echo '{{/each}}';
+			echo '</script>';
+			do_action( $this->slug . __FUNCTION__ );
+		}
 
-		printf( '<script type="text/html" id="%s">', esc_attr( $this->slug . '-group-tmpl' ) );
-		echo '{{#each group}}';
-		$group = new group_field( $this->fields, $this->slug, $this->translation_strings );
-		printf( '<div class="%s">', esc_attr( $this->slug . '-group' ) );
-		echo $group->get_html();
-		echo '<hr class="clear"></div>';
-		echo '{{/each}}';
-		echo '</script>';
 
 	}
 
