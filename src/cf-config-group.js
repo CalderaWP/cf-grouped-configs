@@ -46,7 +46,7 @@ function CF_Processor_Group_Field( $, slug ) {
 	};
 
 	// add trigger to build groups
-	$(document).on('click', '.processor_type_cf-discount', function () {
+	$(document).on('click', '.processor_type_' + slug, function () {
 		var clicked = $(this),
 			pid = $('#' + clicked.find('input').val() + '_config_groups');
 
