@@ -9,6 +9,8 @@ function CF_Processor_Group_Field( $, slug ) {
 	//used to track if remove code button has been hidden
 	this.removeHidden = false;
 
+	this.name = '';
+
 	// trigger group remove
 	$( document ).on( 'click', '.' + slug + '-group-remove', function () {
 		var clicked = $(this),
@@ -61,8 +63,15 @@ function CF_Processor_Group_Field( $, slug ) {
 			name = obj.trigger.data('name'),
 			groups = obj.trigger.val();
 
-		self.pId = obj.trigger.data( 'processor-id' );
+		if( '' === self.name ){
+			 self.name = name;
+		}
 
+		if( undefined == name ){
+			name = 'config[processors][' + self.pId + '][config]';
+		}
+
+		self.pId = obj.trigger.data( 'processor-id' );
 
 		// can we json this thing?
 		if (groups.length) {
