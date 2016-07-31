@@ -50,6 +50,9 @@ class ui {
 
 		// add template
 		add_action( 'caldera_forms_edit_end', array( $this, 'group_template' ) );
+		
+		//load the script
+		wp_enqueue_script( 'cf-group-config', plugins_url( __FILE__ ) . 'cf-config-group.js', array( 'jquery' ) );
 
 	}
 
