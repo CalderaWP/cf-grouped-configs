@@ -116,65 +116,65 @@ class ui {
 	}
 
 	/**
- * Create markup for processor UI date field
- *
- * @param $args
- * @param $id
- * @param $classes
- * @param $required
- *
- * @return string
- */
-protected function date_field( $args, $id, $classes, $required ){
-	$field = sprintf( '<input type="date" class="%2s" id="{{_id}}_%3s" name="{{_name}}[%4s]" value="%5s" %6s>',
-		$classes,
-		esc_attr( $id ),
-		esc_attr( $id ),
-		'{{' . esc_attr( $id ) . '}}',
-		$required
-	);
+	 * Create markup for processor UI date field
+	 *
+	 * @param $args
+	 * @param $id
+	 * @param $classes
+	 * @param $required
+	 *
+	 * @return string
+	 */
+	protected function date_field( $args, $id, $classes, $required ){
+		$field = sprintf( '<input type="date" class="%2s" id="{{_id}}_%3s" name="{{_name}}[%4s]" value="%5s" %6s>',
+			$classes,
+			esc_attr( $id ),
+			esc_attr( $id ),
+			'{{' . esc_attr( $id ) . '}}',
+			$required
+		);
 
-	return $field;
-}
+		return $field;
+	}
 
 
 	/**
- * Create markup for a processor UI number field
- *
- * @param $args
- * @param $id
- * @param $classes
- * @param $required
- *
- * @return string
- */
-protected function number_field( $args, $id, $classes, $required ){
-	$min = 0;
-	$max = false;
-	if( isset( $args[ 'min' ] ) ){
-		$min = intval( $args['min'] );
+	 * Create markup for a processor UI number field
+	 *
+	 * @param $args
+	 * @param $id
+	 * @param $classes
+	 * @param $required
+	 *
+	 * @return string
+	 */
+	protected function number_field( $args, $id, $classes, $required ){
+		$min = 0;
+		$max = false;
+		if( isset( $args[ 'min' ] ) ){
+			$min = intval( $args['min'] );
+		}
+
+		if( isset( $args[ 'max' ] ) && $min < intval( $args[ 'max' ] ) ){
+			$max = intval( $args[ 'max' ] );
+		}
+
+		$min_max = sprintf( 'min="%d"', $min );
+		if( false !== $max ) {
+			$min_max = $min_max . sprintf( ' max="%d"', $max );
+		}
+
+		$field = sprintf( '<input type="number" class="%s" id="{{_id}}_%s" name="{{_name}}[%s]" value="%s" %s %s >',
+			$classes,
+			esc_attr( $id ),
+			esc_attr( $id ),
+			'{{' . esc_attr( $id ) . '}}',
+			$required,
+			$min_max
+		);
+
+		return $field;
 	}
-
-	if( isset( $args[ 'max' ] ) && $min < intval( $args[ 'max' ] ) ){
-		$max = intval( $args[ 'max' ] );
-	}
-
-	$min_max = sprintf( 'min="%d"', $min );
-	if( false !== $max ) {
-		$min_max = $min_max . sprintf( ' max="%d"', $max );
-	}
-
-	$field = sprintf( '<input type="number" class="%s" id="{{_id}}_%s" name="{{_name}}[%s]" value="%s" %s %s >',
-		$classes,
-		esc_attr( $id ),
-		esc_attr( $id ),
-		'{{' . esc_attr( $id ) . '}}',
-		$required,
-		$min_max
-	);
-
-	return $field;
-}
 
 	/**
 	 * Create UI group template
