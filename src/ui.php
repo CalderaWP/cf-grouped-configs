@@ -44,7 +44,7 @@ class ui {
 	public function __construct( array $form, $slug, array $translation_strings, array $fields ) {
 		$this->form = $form;
 		$this->slug = $slug;
-		$this->fileds = $fields;
+		$this->fields = $fields;
 		$this->translation_strings = $translation_strings;
 		add_filter( 'caldera_forms_processor_ui_input_pre_html', array( $this, 'filter_fields' ), 10, 6 );
 
