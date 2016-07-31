@@ -191,7 +191,7 @@ protected function number_field( $args, $id, $classes, $required ){
 		printf( '<script type="text/html" id="%s">', esc_attr( $this->slug . '-group-tmpl' ) );
 		echo '{{#each group}}';
 		$group = new group_field( $this->fields, $this->slug, $this->translation_strings );
-		printf( '<div class="%s">', esc_attr( $this->slug . '-group' );
+		printf( '<div class="%s">', esc_attr( $this->slug . '-group' ) );
 		echo $group->get_html();
 		echo '<hr class="clear"></div>';
 		echo '{{/each}}';
