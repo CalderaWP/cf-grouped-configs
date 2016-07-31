@@ -14,7 +14,7 @@
   },
   "autoload": {
     "psr-4": {
-      "calderawp\\cf\\groupconfig": "src"
+      "calderawp\\cf\\groupconfig\\": "src"
     }
   }
 }
