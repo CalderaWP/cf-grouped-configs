@@ -63,12 +63,17 @@ function CF_Processor_Group_Field( $, slug ) {
 			name = obj.trigger.data('name'),
 			groups = obj.trigger.val();
 
+		if ( undefined == self.pId  || '' == self.pId )  {
+			self.pId = obj.trigger.data('processor-id');
+		}
+
+
 
 		if( undefined == name ){
 			name = 'config[processors][' + self.pId + '][config]';
 		}
 
-		self.pId = obj.trigger.data( 'processor-id' );
+
 
 		// can we json this thing?
 		if (groups.length) {

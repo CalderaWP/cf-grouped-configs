@@ -103,7 +103,7 @@ class ui {
 
 
 		// Add new group button trigger
-		$out .= sprintf( '<button class="button ajax-trigger %s" title="%" data-name="{{_name}}" data-request="%s" data-template="#%s" data-target="#{{_id}}_groups" data-target-insert="append" type="button" data-callback="%s"><span class="dashicons dashicons-plus" style="margin: 0px 0px 0px -6px; padding: 5px 0px;"></span> %s</button>',
+		$out .= sprintf( '<button class="button ajax-trigger %s" title="%" data-name="{{_name}}" data-request="%s" data-template="#%s" data-target="#{{_id}}_groups" data-target-insert="append" type="button" data-callback="%s" data-processor-id="{{_id}}"><span class="dashicons dashicons-plus" style="margin: 0px 0px 0px -6px; padding: 5px 0px;"></span> %s</button>',
 			esc_attr( $slug . '-group-add' ),
 			esc_attr( $translation_strings[ 'add_title' ] ),
 			esc_attr( str_replace( '-', '_', $slug ) . '_group' ),
