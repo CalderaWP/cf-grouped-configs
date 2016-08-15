@@ -34,6 +34,13 @@ class ui {
 	protected $fields;
 
 	/**
+	 * Config version
+	 *
+	 * @var string
+	 */
+	protected $version = '1.1.0';
+
+	/**
 	 * Constructor.
 	 *
 	 * @param array $form Form congig
@@ -52,7 +59,7 @@ class ui {
 		add_action( 'caldera_forms_edit_end', array( $this, 'group_template' ) );
 
 		//load the script
-		wp_enqueue_script( 'cf-group-config', plugins_url( '', __FILE__  ) . '/cf-config-group.js', array( 'jquery' ) );
+		wp_enqueue_script( 'cf-group-config', plugins_url( '', __FILE__  ) . '/cf-config-group.js', array( 'jquery' ), $this->version );
 
 	}
 
