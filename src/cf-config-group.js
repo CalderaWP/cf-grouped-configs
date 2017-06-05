@@ -40,6 +40,12 @@ function CF_Processor_Group_Field( $, slug ) {
 		if(  self.count_groups != 1 && true === self.removeHidden ){
 			$( '.' + slug + '-group-remove' ).show().attr( 'aria-hidden', false ).css( 'visibility', 'visible' );
 		}
+
+		$( document ).trigger( 'cf.groups.add', {
+			slug: slug,
+			count: self.count_groups(),
+			pid: self.pId
+		});
 	});
 
 	//Get current group count
@@ -50,11 +56,20 @@ function CF_Processor_Group_Field( $, slug ) {
 	// Add trigger to build groups
 	$(document).on('click', '.processor_type_' + slug, function () {
 		var clicked = $(this),
-			pid = $('#' + clicked.find('input').val() + '_config_groups');
+			$pid = $('#' + clicked.find('input').val() + '_config_groups');
 
-		if (pid.length) {
-			pid.trigger('build_groups');
+		if ($pid.length) {
+			$pid.trigger('build_groups');
 		}
+
+		var _pid = $pid.data( 'processorId' );
+
+		$( document ).trigger( 'cf.groups.build', {
+			slug: slug,
+			count: self.count_groups(),
+			pid : _pid
+		});
+
 	});
 
 	// Build trigger -- also runs when there is a new group added
@@ -66,7 +81,6 @@ function CF_Processor_Group_Field( $, slug ) {
 		if ( undefined == self.pId  || '' == self.pId )  {
 			self.pId = obj.trigger.data('processor-id');
 		}
-
 
 
 		if( undefined == name ){
